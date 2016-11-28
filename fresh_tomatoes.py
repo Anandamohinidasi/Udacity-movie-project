@@ -43,6 +43,9 @@ main_page_head = '''
             background-color: purple;
             cursor: pointer;
         }
+        .movie-tile:hover #desc {
+            opacity: 1;
+        }
         .scale-media {
             padding-bottom: 56.25%;
             position: relative;
@@ -55,6 +58,18 @@ main_page_head = '''
             left: 0;
             top: 0;
             background-color: white;
+        }
+        #desc{
+            position: absolute;
+            margin-top: -257pt;
+            margin-left: 50pt;
+            width: 220px;
+            height: 342px;
+            color: white;
+            text-align: justify;
+            padding: 5pt;
+            background-color: rgba(0,0,0,0.5);
+            opacity:0;
         }
     </style>
     <script type="text/javascript" charset="utf-8">
@@ -80,7 +95,7 @@ main_page_head = '''
           $('.movie-tile').hide().first().show("fast", function showNext() {
             $(this).next("div").show("fast", showNext);
           });
-        });
+        });        
     </script>
 </head>
 '''
@@ -123,7 +138,8 @@ main_page_content = '''
 # A single movie entry html template
 movie_tile_content = '''
 <div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
+    <img src="{poster_image_url}" width="220" height="342" alt="{movie_storie}">
+    <p id="desc">{movie_storie}</p>
     <h2>{movie_title}</h2>
 </div>
 '''
@@ -145,7 +161,8 @@ def create_movie_tiles_content(movies):
         content += movie_tile_content.format(
             movie_title=movie.title,
             poster_image_url=movie.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id
+            trailer_youtube_id=trailer_youtube_id,
+            movie_storie=movie.storie
         )
     return content
 
